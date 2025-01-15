@@ -6,7 +6,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -25,8 +28,10 @@ public class Tarefas {
 	@Size(min = 2, max = 100, message = "O atributo descrição deve conter no mínimo 2 e no máximo 100 caracteres")
 	private String descricao;
 	
-	@Column(nullable = false) 
-	private boolean status = false;
+	@NotNull
+	@Min(value = 0, message = "O status deve ser no mínimo 0")
+    @Max(value = 2, message = "O status deve ser no máximo 2")
+    private int status;
 
 	public Long getId() {
 		return id;
@@ -52,11 +57,11 @@ public class Tarefas {
 		this.descricao = descricao;
 	}
 
-	public boolean isStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(boolean status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 }
